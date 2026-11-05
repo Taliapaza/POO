@@ -10,17 +10,30 @@ class Cliente:
         if id < 0: raise ValueError("Id deve ser positivo")
         self.__id = id
     def set_nome(self, nome):
-        if nome == "": raise ValueError("Nome deve ser informado")
-        self.__nome = nome
+        try:
+            self.__nome = nome
+        except ValueError:
+            print("O nome deve ser uma string e não pode ser vazio")
+        except:
+            print("Lembre-se que o nome deve ser uma string e não pode ser vazio. quaisque ações que fugirem desse padrão ira zerar erro")
     def set_email(self, email):
-        if email == "": raise ValueError("E-mail deve ser informado")
-        self.__email = email
+        try:
+            self.__email = email
+        except ValueError:
+            print("O email deve ser uma string e não pode ser vazio")
+        except:
+            print("Lembre-se que o email deve ser uma string e não pode ser vazio. quaisque ações que fugirem desse padrão ira zerar erro")
     def set_fone(self, fone):
         if fone == "": raise ValueError("Fone deve ser informado")
         self.__fone = fone
     def set_senha(self, senha):
-        if senha == "": raise ValueError("Senha deve ser informada")
-        self.__senha = senha
+        try:
+            self.__senha = senha
+        except ValueError:
+            print("Senha não pode ter valor vazio")
+        except:
+            print("Lembre-se que a senha não pode ser vazia. quaisque ações que fugirem desse padrão ira zerar erro")
+
 
     def get_id(self) : return self.__id
     def get_nome(self) : return self.__nome
