@@ -1,3 +1,4 @@
+
 import streamlit as st
 import pandas as pd
 import time
@@ -26,11 +27,15 @@ class ManterProfissionalUI:
         email = st.text_input("Informe o e-mail")
         especialidade = st.text_input("Informe a especialidade")
         senha = st.text_input("Informe a senha", type="password")
+
         if st.button("Inserir"):
-            Service.profissional_inserir(nome, email, especialidade, senha)
-            st.success("Profissional inserido com sucesso")
-            time.sleep(2)
-            st.rerun()
+            try:
+                Service.profissional_inserir(nome, email, especialidade, senha)
+                st.success("Profissional inserido com sucesso")
+                time.sleep(2)
+                st.rerun()
+            except Exception as erro:
+                st.error(str(erro))
 
     def atualizar():
         profissionais = Service.profissional_listar()
@@ -43,20 +48,27 @@ class ManterProfissionalUI:
             senha = st.text_input("Nova senha", op.get_senha(), type="password")
 
             if st.button("Atualizar"):
-                id = op.get_id()
-                Service.profissional_atualizar(id, nome, email, especialidade, senha)
-                st.success("Profissional atualizado com sucesso")
-                time.sleep(2)
-                st.rerun()
+                try:
+                    id = op.get_id()
+                    Service.profissional_atualizar(id, nome, email, especialidade, senha)
+                    st.success("Profissional atualizado com sucesso")
+                    time.sleep(2)
+                    st.rerun()
+                except Exception as erro:
+                    st.error(str(erro))
 
     def excluir():
         profissionais = Service.profissional_listar()
         if len(profissionais) == 0: st.write("Nenhum profissional cadastrado")
         else:
             op = st.selectbox("Exclusão de Profissionais", profissionais)
+
             if st.button("Excluir"):
-                id = op.get_id()
-                Service.profissional_excluir(id)
-                st.success("Profissional excluído com sucesso")
-                time.sleep(2)
-                st.rerun()
+                try:
+                    id = op.get_id()
+                    Service.profissional_excluir(id)
+                    st.success("Profissional excluído com sucesso")
+                    time.sleep(2)
+                    st.rerun()
+                except Exception as erro:
+                    st.error(str(erro))

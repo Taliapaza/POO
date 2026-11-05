@@ -13,8 +13,23 @@ from datetime import datetime, timedelta
 class Service:
     @staticmethod
     def cliente_inserir(nome, email, fone, senha):
-        obj = Cliente(0, nome, email, fone, senha)
-        ClienteDAO().inserir(obj)
+        try:
+            if email == "admin":#verifica se já existe o email
+                raise Exception()
+
+            for c in Service.cliente_listar():
+                if c.get_email() == email:
+                    raise Exception()
+
+            for p in Service.profissional_listar():
+                if p.get_email() == email:
+                    raise Exception()
+
+            obj = Cliente(0, nome, email, fone, senha)
+            ClienteDAO().inserir(obj)
+        except:
+            print("Email já existente ou reservado")
+
     @staticmethod
     def cliente_listar():
         r = ClienteDAO().listar()
@@ -25,11 +40,34 @@ class Service:
         return ClienteDAO().listar_id(id)
     @staticmethod
     def cliente_atualizar(id, nome, email, fone, senha):
-        obj = Cliente(id, nome, email, fone, senha)
-        ClienteDAO().atualizar(obj)
+        try:
+            if email == "admin":#verifica se já existe o email
+                raise Exception()
+
+            for c in Service.cliente_listar():
+                if c.get_email() == email:
+                    raise Exception()
+
+            for p in Service.profissional_listar():
+                if p.get_email() == email:
+                    raise Exception()
+
+            obj = Cliente(id, nome, email, fone, senha)
+            ClienteDAO().inserir(obj)
+        except:
+            print("Email já existente ou reservado")
+
     @staticmethod
     def cliente_excluir(id):
-        ClienteDAO().excluir(id)
+        try:
+            for h in Service.horario_listar():
+                if h.get_id_cliente() == id:
+                    raise Exception()
+
+            ClienteDAO().excluir(id)
+
+        except:
+            print("Não é possível excluir: cliente possui horário agendado")
     @staticmethod
     def cliente_criar_admin():
         for c in Service.cliente_listar():
@@ -66,12 +104,20 @@ class Service:
 
     @staticmethod
     def horario_inserir(data, confirmado, id_cliente, id_servico, id_profissional):
-        c = Horario(0, data)
-        c.set_confirmado(confirmado)
-        c.set_id_cliente(id_cliente)
-        c.set_id_servico(id_servico)
-        c.set_id_profissional(id_profissional)
-        HorarioDAO().inserir(c)
+        try:
+            for h in Service.horario_listar():
+                if h.get_data() == data and h.get_id_profissional() == id_profissional:
+                    raise Exception("Já existe um horário para esse profissional nessa data e hora")
+
+            c = Horario(0, data)
+            c.set_confirmado(confirmado)
+            c.set_id_cliente(id_cliente)
+            c.set_id_servico(id_servico)
+            c.set_id_profissional(id_profissional)
+            HorarioDAO().inserir(c)
+
+        except Exception as erro:
+            raise Exception(erro)
     @staticmethod
     def horario_listar(): # select com order by
         r = HorarioDAO().listar()
@@ -82,15 +128,28 @@ class Service:
         return HorarioDAO().listar_id(id)
     @staticmethod
     def horario_atualizar(id, data, confirmado, id_cliente, id_servico, id_profissional):
-        c = Horario(id, data)
-        c.set_confirmado(confirmado)
-        c.set_id_cliente(id_cliente)
-        c.set_id_servico(id_servico)
-        c.set_id_profissional(id_profissional)
-        HorarioDAO().atualizar(c)
+        try:
+            for h in Service.horario_listar():
+                if h.get_data() == data and h.get_id_profissional() == id_profissional:
+                    raise Exception("Já existe um horário para esse profissional nessa data e hora")
+
+            c = Horario(id, data)
+            c.set_confirmado(confirmado)
+            c.set_id_cliente(id_cliente)
+            c.set_id_servico(id_servico)
+            c.set_id_profissional(id_profissional)
+            HorarioDAO().inserir(c)
+
+        except Exception as erro:
+            raise Exception(erro)
     @staticmethod
     def horario_excluir(id):
-        HorarioDAO().excluir(id)
+        horario = Service.horario_listar_id(id)
+
+        if horario.get_id_cliente() is not None:
+            raise Exception("Não é possível excluir um horário que já foi agendado por um cliente")
+
+    HorarioDAO().excluir(id)
     @staticmethod
     def horario_listar_disponiveis(id_profissional):
         r = []
@@ -161,6 +220,18 @@ class Service:
 
     @staticmethod
     def profissional_inserir(nome, email, especialidade, senha):
+        try:
+            if email == "admin":#verifica se já existe o email
+                raise Exception()
+
+            for p in Service.profissional_listar():
+                if p.get_email() == email:
+                    raise Exception()
+
+            obj = Profissional(0, nome, email, especialidade, senha)
+            ProfissionalDAO().inserir(obj)
+        except:
+            print("Email já existente ou reservado")
         obj = Profissional(0, nome, email, especialidade, senha)
         ProfissionalDAO().inserir(obj)
     @staticmethod
@@ -173,11 +244,31 @@ class Service:
         return ProfissionalDAO().listar_id(id)
     @staticmethod
     def profissional_atualizar(id, nome, email, especialidade, senha):
-        obj = Profissional(id, nome, email, especialidade, senha)
-        ProfissionalDAO().atualizar(obj)
+        try:
+            if email == "admin":#verifica se já existe o email
+                raise Exception()
+
+            for p in Service.profissional_listar():
+                if p.get_email() == email:
+                    raise Exception()
+
+            obj = Profissional(id, nome, email, especialidade, senha)
+            ProfissionalDAO().inserir(obj)
+        except:
+            print("Email já existente ou reservado")
+        obj = Profissional(0, nome, email, especialidade, senha)
+        ProfissionalDAO().inserir(obj)
     @staticmethod
     def profissional_excluir(id):
-        ProfissionalDAO().excluir(id)
+        try:
+            for h in Service.horario_listar():
+                if h.get_id_profissional() == id:
+                    raise Exception()
+
+            ProfissionalDAO().excluir(id)
+
+        except:
+            print("Não é possível excluir: profissinal possui horário agendado")
     @staticmethod
     def profissional_autenticar(email, senha):
         for c in Service.profissional_listar():
