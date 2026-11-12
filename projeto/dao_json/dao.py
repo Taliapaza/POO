@@ -1,23 +1,46 @@
+from abc import ABC, abstractmethod
 
-import sqlite3
-from datetime import datetime
+class DAO(ABC):
+    def __init__(self, arquivo):
+        self._arquivo = arquivo
+        self._objetos = []
+        self._abrir()
 
-class DAO:
-    conn = None
-    nome_bd="agenda.db"
+    @abstractmethod
+    def _abrir(self):
+        pass
 
-    @classmethod
-    def abrir(cls):
-        cls.conn = sqlite3.connect(cls.nome_bd)
-        cls.conn.execute("PRAGMA foreign_keys = ON")
- 
-    @classmethod
-    def fechar(cls):
-        cls.conn.close()
-       
-    @classmethod
-    def execute(cls, sql, params = None):
-        cursor = cls.conn.cursor()
-        cursor.execute(sql, params or [])
-        cls.conn.commit()
-        return cursor
+    @abstractmethod
+    def _salvar(self):
+        pass
+
+    def inserir(self, obj):
+        # gerar um novo id com o maior valor existente mais um
+        id = 0
+        if len(self._objetos) > 0:
+            for aux in self._objetos:
+                if aux.get_id() > id: id = aux.get_id()
+        obj.set_id(id + 1)
+        self._objetos.append(obj)
+        self._salvar()
+
+    def listar(self):                
+        return self._objetos
+
+    def listar_id(self, id):
+        for obj in self._objetos:
+            if obj.get_id() == id: return obj
+        return None
+
+    def atualizar(self, obj):
+        aux = self.listar_id(obj.get_id())
+        if aux != None:
+            self._objetos.remove(aux)
+            self._objetos.append(obj)
+            self._salvar()
+
+    def excluir(self, id):
+        aux = self.listar_id(id)
+        if aux != None:
+            self._objetos.remove(aux)
+            self._salvar()
