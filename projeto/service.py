@@ -7,12 +7,12 @@ from dao_json.horariodao import HorarioDAO
 from models.atendimento import Atendimento
 from dao_json.atendimentodao import AtendimentoDAO
 from models.profissional import Profissional
-from cd prdao_json.profissionaldao import ProfissionalDAO
+from dao_json.profissionaldao import ProfissionalDAO
 from datetime import datetime, timedelta
 #chama as classes de dao
 class Service:
     @staticmethod
-    def cliente_inserir(nome, email, fone, senha):
+    def cliente_inserir(nome, email, fone, senha, foto):
         try:
             if email == "admin":#verifica se já existe o email
                 raise Exception()
@@ -25,7 +25,7 @@ class Service:
                 if p.get_email() == email:
                     raise Exception()
 
-            obj = Cliente(0, nome, email, fone, senha)
+            obj = Cliente(0, nome, email, fone, senha, foto)
             ClienteDAO().inserir(obj)
         except:
             print("Email já existente ou reservado")
@@ -39,7 +39,7 @@ class Service:
     def cliente_listar_id(id):
         return ClienteDAO().listar_id(id)
     @staticmethod
-    def cliente_atualizar(id, nome, email, fone, senha):
+    def cliente_atualizar(id, nome, email, fone, senha, foto):
         try:
             if email == "admin":#verifica se já existe o email
                 raise Exception()
@@ -52,7 +52,7 @@ class Service:
                 if p.get_email() == email:
                     raise Exception()
 
-            obj = Cliente(id, nome, email, fone, senha)
+            obj = Cliente(id, nome, email, fone, senha, foto)
             ClienteDAO().inserir(obj)
         except:
             print("Email já existente ou reservado")
@@ -219,7 +219,7 @@ class Service:
 
 
     @staticmethod
-    def profissional_inserir(nome, email, especialidade, senha):
+    def profissional_inserir(nome, email, especialidade, senha, foto):
         try:
             if email == "admin":#verifica se já existe o email
                 raise Exception()
@@ -228,11 +228,11 @@ class Service:
                 if p.get_email() == email:
                     raise Exception()
 
-            obj = Profissional(0, nome, email, especialidade, senha)
+            obj = Profissional(0, nome, email, especialidade, senha, foto)
             ProfissionalDAO().inserir(obj)
         except:
             print("Email já existente ou reservado")
-        obj = Profissional(0, nome, email, especialidade, senha)
+        obj = Profissional(0, nome, email, especialidade, senha, foto)
         ProfissionalDAO().inserir(obj)
     @staticmethod
     def profissional_listar():
@@ -243,7 +243,7 @@ class Service:
     def profissional_listar_id(id):
         return ProfissionalDAO().listar_id(id)
     @staticmethod
-    def profissional_atualizar(id, nome, email, especialidade, senha):
+    def profissional_atualizar(id, nome, email, especialidade, senha, foto):
         try:
             if email == "admin":#verifica se já existe o email
                 raise Exception()
@@ -252,11 +252,11 @@ class Service:
                 if p.get_email() == email:
                     raise Exception()
 
-            obj = Profissional(id, nome, email, especialidade, senha)
+            obj = Profissional(id, nome, email, especialidade, senha, foto)
             ProfissionalDAO().inserir(obj)
         except:
             print("Email já existente ou reservado")
-        obj = Profissional(0, nome, email, especialidade, senha)
+        obj = Profissional(0, nome, email, especialidade, senha, foto)
         ProfissionalDAO().inserir(obj)
     @staticmethod
     def profissional_excluir(id):

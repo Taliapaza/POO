@@ -4,5 +4,23 @@
     "nome": "admin",
     "email": "admin",
     "fone": "fone",
-    "senha": "1234"
-  }]
+    "senha": "1234",
+    "foto": ""
+  },
+  {
+    "id": 2,
+    "nome": "talia",
+    "email": "talia.apaza@escolar.ifrn.edu.br",
+    "fone": "7787878",
+    "senha": "1234",
+    "foto": ""
+  },
+  {
+    "id": 3,
+    "nome": "tati",
+    "email": "talia.apaza@eaaa.com",
+    "fone": "13434",
+    "senha": "1234",
+    "foto": ""
+  }
+]
