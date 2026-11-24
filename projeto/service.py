@@ -321,3 +321,19 @@ class Service:
             if obj.get_confirmado() == False and obj.get_data().day == datetime.now().day: h.append(obj)
         h.sort(key = lambda obj : obj.get_data())
         return h
+
+
+    
+    #Nova Funcionalidade: Histórico de Atendimentos de um Cliente (v2)
+    def atendimento_visualizar_historico_cliente():
+        r = []  #criar uma lista para guardar os atendimentos 
+
+        for atendimento in Service.atendimento_listar(): #listar todos os atendimentos  
+            horario = Service.horario_listar_id( #listar todos os id's do Horário (para poder cruzar Atendimento x Horário) 
+                atendimento.get_id_horario() #pega o atendimento com o id do horário
+            )
+            if horario != None and horario.get_id_cliente() == id_cliente: #se for o atendimento DO CLIENTE (tem o mesmo id que o cliente)
+                r.append(atendimento) #adiciona a lista
+
+        r.sort(key = lambda obj : obj.get_data()) #só pra ordenar a lista 
+        return r #retornar a lista
