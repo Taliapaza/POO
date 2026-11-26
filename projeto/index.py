@@ -16,6 +16,10 @@ from templates.confirmarservicoui import ConfirmarServicoUI
 from templates.totalizaratendimentos import TotalizarAtendimentosUI
 from templates.listaagendaclienteui import ListarAgendaClienteUI
 from templates.ListarHorariosNaoConfirmadosHojeUI import ListarHorariosNãoConfirmadosHojeUI
+
+#adicionando a nossa funcionalidade:
+from templates.historicoatendimentosui import HistoricoAtendimentosUI
+
 from service import Service
 import streamlit as st
 
@@ -27,10 +31,12 @@ class IndexUI:
         if op == "Abrir Conta": AbrirContaUI.main()
 
     def menu_cliente():
-        op = st.sidebar.selectbox("Menu", ["Meus Dados", "Agendar Serviço", "Meus Serviços"])
+        op = st.sidebar.selectbox("Menu", ["Meus Dados", "Agendar Serviço", "Meus Serviços", "Histórico de Atendimentos"])
         if op == "Meus Dados": PerfilClienteUI.main()
         if op == "Agendar Serviço": AgendarServicoUI.main()
         if op == "Meus Serviços": VisualizarMeusServicosUI.main()
+        #adicionando a funcionalidade nova:
+        if op == "Histórico de Atendimentos": HistoricoAtendimentosUI.main()
 
     def menu_profissional():
         op = st.sidebar.selectbox("Menu", ["Meus Dados", "Abrir Agenda", "Minha Agenda", "Confirmar Serviço"])

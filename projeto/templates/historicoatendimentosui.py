@@ -25,7 +25,7 @@ class HistoricoAtendimentosUI:
                     obj.get_id_horario() #usar o id_horário para pegar cada atendimento
                 )
 
-                servico = Service.servico_listar_id(
+                servico = Service.servico_listar_id( 
                     horario.get_id_servico()
                 )
 
@@ -39,7 +39,7 @@ class HistoricoAtendimentosUI:
                 if profissional != None:
                     profissional = profissional.get_nome()
 
-                dic.append({
+                dic.append({ #adicionar todas as informações a um dicionário
                     "data": obj.get_data(),
                     "serviço": servico,
                     "profissional": profissional,
