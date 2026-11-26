@@ -237,7 +237,6 @@ class Service:
         h.sort(key = lambda obj : obj.get_data())
         return h
 
-<<<<<<< HEAD
 
     
     #Nova Funcionalidade: Histórico de Atendimentos de um Cliente (v2)
@@ -257,7 +256,7 @@ class Service:
         r.sort(key=lambda obj: obj.get_data())
 
         return r
-=======
+
     @staticmethod
     def cliente_criar_admin():
         for c in Service.cliente_listar():
@@ -275,4 +274,36 @@ class Service:
         for p in Service.profissional_listar():
             if p.get_email() == email and p.get_senha() == senha: return {"id": p.get_id(), "nome": p.get_nome(),}
         return None
->>>>>>> aa5e2eb (Adicionar imagem)
+
+
+    #fazendo agenda semanal: 
+
+    @staticmethod
+    def admin_visualizar_agenda_semana():
+        #Pega a data atual -> início do dia: (00:00)
+        data_inicio = datetime.now().replace(
+            hour=0, minute=0, second=0, microsecond=0
+        )
+
+        #limite: sete dias a partir do início de hoje
+        #sem limite final 
+        data_fim = data_inicio + timedelta(days=7)
+
+        #Pega todos os horários do sistema 
+        horarios = Service.horario_listar()
+
+        #Pega só os horários dessa semana 
+        resultado = []
+
+        for obj in horarios:
+            #ver se tem cliente com esse horário e ver a data tá dentro de 7 dias (a semana)
+            if (obj.get_id_cliente() not in [None, 0]
+                and data_inicio <= obj.get_data() < data_fim):
+
+                resultado.append(obj)
+
+        #ordenar do menor para o maior
+        resultado.sort(key=lambda obj: obj.get_data())
+
+        return resultado
+

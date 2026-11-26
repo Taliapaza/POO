@@ -16,6 +16,7 @@ from templates.confirmarservicoui import ConfirmarServicoUI
 from templates.totalizaratendimentos import TotalizarAtendimentosUI
 from templates.listaagendaclienteui import ListarAgendaClienteUI
 from templates.ListarHorariosNaoConfirmadosHojeUI import ListarHorariosNãoConfirmadosHojeUI
+from templates.mostraragendasemana import MostrarAgendaSemanaUI #agenda semanal
 
 #adicionando a nossa funcionalidade:
 from templates.historicoatendimentosui import HistoricoAtendimentosUI
@@ -46,8 +47,10 @@ class IndexUI:
         if op == "Minha Agenda": VisualizarMinhaAgendaUI.main()
         if op == "Confirmar Serviço": ConfirmarServicoUI.main()
 
+    
     def menu_admin():
-        op = st.sidebar.selectbox("Menu", ["Meus Dados", "Clientes", "Serviços", "Horários", "Profissionais", "Atendimentos", "Totalizar Atendimentos", "Listar agenda Cliente", "Listar Horarios Não Confirmados"])
+        op = st.sidebar.selectbox("Menu", ["Meus Dados", "Clientes","Serviços", "Horários", "Profissionais", "Atendimentos", "Totalizar Atendimentos", "Listar agenda Cliente", "Listar Horarios Não Confirmados","Agenda da Semana"])
+
         if op == "Meus Dados": PerfilAdminUI.main()
         if op == "Clientes": ManterClienteUI.main()
         if op == "Serviços": ManterServicoUI.main()
@@ -57,6 +60,8 @@ class IndexUI:
         if op == "Totalizar Atendimentos": TotalizarAtendimentosUI.main()
         if op == "Listar agenda Cliente": ListarAgendaClienteUI.main()
         if op == "Listar Horarios Não Confirmados": ListarHorariosNãoConfirmadosHojeUI.main()
+        if op == "Agenda da Semana": MostrarAgendaSemanaUI.main()
+
 
 
     def sair_do_sistema():
