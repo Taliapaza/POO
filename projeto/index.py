@@ -21,6 +21,7 @@ from templates.ListarHorariosNaoConfirmadosHojeUI import ListarHorariosNãoConfi
 from templates.historicoatendimentosui import HistoricoAtendimentosUI
 
 from service import Service
+from dao_sql.database import Database
 import streamlit as st
 
 class IndexUI:
@@ -81,5 +82,8 @@ class IndexUI:
         Service.cliente_criar_admin()
         # monta o sidebar
         IndexUI.sidebar()
+
+Database.abrir()
+Database.criar_tabelas()
 
 IndexUI.main()

@@ -6,16 +6,7 @@ class DAO(ABC):
         self._objetos = []
         self._abrir()
 
-    @abstractmethod
-    def _abrir(self):
-        pass
-
-    @abstractmethod
-    def _salvar(self):
-        pass
-
     def inserir(self, obj):
-        # gerar um novo id com o maior valor existente mais um
         id = 0
         if len(self._objetos) > 0:
             for aux in self._objetos:
@@ -44,3 +35,11 @@ class DAO(ABC):
         if aux != None:
             self._objetos.remove(aux)
             self._salvar()
+
+    @abstractmethod
+    def _abrir(self):  
+        pass
+
+    @abstractmethod
+    def _salvar(self):    
+        pass

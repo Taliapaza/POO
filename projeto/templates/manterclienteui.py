@@ -27,10 +27,12 @@ class ManterClienteUI:
         email = st.text_input("Informe o e-mail")
         fone = st.text_input("Informe o fone")
         senha = st.text_input("Informe a senha", type="password")
+        foto =  st.file_uploader( "Escolha sua foto de perfil",type=["png", "jpg", "jpeg"])
+        imagem = foto.getvalue() if foto else None
 
         if st.button("Inserir"):
             try:
-                Service.cliente_inserir(nome, email, fone, senha)
+                Service.cliente_inserir(nome, email, fone, senha, imagem)
                 st.success("Cliente inserido com sucesso")
                 time.sleep(2)
                 st.rerun()
@@ -46,11 +48,13 @@ class ManterClienteUI:
             email = st.text_input("Novo e-mail", op.get_email())
             fone = st.text_input("Novo fone", op.get_fone())
             senha = st.text_input("Nova senha", op.get_senha(), type="password")
+            foto =  st.file_uploader( "Escolha sua foto de perfil",type=["png", "jpg", "jpeg"])
+            imagem = foto.getvalue() if foto else None
 
             if st.button("Atualizar"):
                 try:
                     id = op.get_id()
-                    Service.cliente_atualizar(id, nome, email, fone, senha)
+                    Service.cliente_atualizar(id, nome, email, fone, senha, imagem)
                     st.success("Cliente atualizado com sucesso")
                     time.sleep(2)
                     st.rerun()
